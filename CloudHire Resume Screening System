@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CloudHire Resume Screening System</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #eef3f8;
+      color: #1f2937;
+    }
+
+    header {
+      background: #263b73;
+      color: white;
+      padding: 25px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin-bottom: 8px;
+    }
+
+    .container {
+      width: 94%;
+      max-width: 1200px;
+      margin: 25px auto;
+    }
+
+    .card {
+      background: white;
+      padding: 22px;
+      border-radius: 12px;
+      margin-bottom: 22px;
+      box-shadow: 0 4px 14px #00000018;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 16px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 7px;
+    }
+
+    textarea,
+    input,
+    select,
+    button {
+      width: 100%;
+      padding: 11px;
+      border: 1px solid #ccd6e0;
+      border-radius: 6px;
+      font-size: 15px;
+    }
+
+    textarea {
+      min-height: 180px;
+      resize: vertical;
+    }
+
+    input[type="file"] {
+      background: #f8fafc;
+    }
+
+    button {
+      border: none;
+      background: #3d63dd;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background: #294bb5;
+    }
+
+    .green {
+      background: #16834d;
+    }
+
+    .green:hover {
+      background: #10683c;
+    }
+
+    .red {
+      background: #c0392b;
+    }
+
+    .red:hover {
+      background: #992d22;
+    }
+
+    .gray {
+      background: #64748b;
+    }
+
+    .gray:hover {
+      background: #475569;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 15px;
+      margin-bottom: 22px;
+    }
+
+    .stat {
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .stat h2 {
+      font-size: 30px;
+      margin-bottom: 8px;
+    }
+
+    .blue {
+      background: #2563eb;
+    }
+
+    .purple {
+      background: #7c3aed;
+    }
+
+    .green-stat {
+      background: #15803d;
+    }
+
+    .orange {
+      background: #d97706;
+    }
+
+    .file-list {
+      background: #f8fafc;
+      border: 1px solid #dbe3ec;
+      border-radius: 7px;
+      padding: 13px;
+      margin-top: 12px;
+      line-height: 1.9;
+    }
+
+    .message {
+      padding: 12px;
+      border-radius: 6px;
+      margin-top: 15px;
+      display: none;
+    }
+
+    .success-message {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .error-message {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .info-message {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+
+    .candidate-list {
+      display: grid;
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .candidate-card {
+      border: 1px solid #d5deea;
+      border-radius: 10px;
+      padding: 18px;
+      background: #ffffff;
+    }
+
+    .candidate-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .candidate-header h3 {
+      color: #263b73;
+    }
+
+    .score {
+      font-size: 22px;
+      font-weight: bold;
+      padding: 8px 14px;
+      border-radius: 8px;
+    }
+
+    .high-score {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .medium-score {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .low-score {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .progress {
+      height: 13px;
+      background: #e5e7eb;
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 10px 0 14px;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: #3d63dd;
+      transition: width 0.4s;
+    }
+
+    .skill-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin-top: 12px;
+    }
+
+    .skill-box {
+      padding: 12px;
+      border-radius: 7px;
+      line-height: 1.9;
+    }
+
+    .matched {
+      background: #ecfdf5;
+      color: #166534;
+    }
+
+    .missing {
+      background: #fff1f2;
+      color: #9f1239;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 4px 8px;
+      margin: 3px;
+      border-radius: 12px;
+      font-size: 12px;
+      background: #e0e7ff;
+      color: #3730a3;
+    }
+
+    .empty {
+      text-align: center;
+      color: #64748b;
+      padding: 25px;
+    }
+
+    .warning {
+      background: #fff7ed;
+      color: #9a3412;
+      border-left: 5px solid #f97316;
+      padding: 13px;
+      margin-top: 15px;
+      line-height: 1.6;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+
+    th,
+    td {
+      padding: 12px;
+      border-bottom: 1px solid #e5e7eb;
+      text-align: left;
+    }
+
+    th {
+      background: #263b73;
+      color: white;
+    }
+
+    @media (max-width: 700px) {
+      .skill-section {
+        grid-template-columns: 1fr;
+      }
+
+      .candidate-header {
+        align-items: flex-start;
+      }
+
+      table {
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>CloudHire Resume Screening System</h1>
+    <p>AI-assisted resume analysis and candidate ranking dashboard</p>
+  </header>
+
+  <main class="container">
+
+    <section class="stats">
+      <div class="stat blue">
+        <h2 id="candidateCount">0</h2>
+        <p>Candidates Screened</p>
+      </div>
+
+      <div class="stat purple">
+        <h2 id="averageScore">0%</h2>
+        <p>Average Match Score</p>
+      </div>
+
+      <div class="stat green-stat">
+        <h2 id="shortlistedCount">0</h2>
+        <p>Shortlisted Candidates</p>
+      </div>
+
+      <div class="stat orange">
+        <h2 id="skillCount">0</h2>
+        <p>Skills Detected</p>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Job Description</h2>
+      <br>
+
+      <label for="jobTitle">Job Title</label>
+      <input
+        type="text"
+        id="jobTitle"
+        placeholder="Example: Frontend Developer"
+      >
+
+      <br>
+
+      <label for="jobDescription">Enter Job Description and Required Skills</label>
+      <textarea
+        id="jobDescription"
+        placeholder="Example:
+We are looking for a frontend developer with HTML, CSS, JavaScript, React, Git, REST API, and SQL skills. The candidate should have communication skills and problem-solving experience."
+      ></textarea>
+
+      <div class="warning">
+        This tool supports recruiter assistance only. Do not use the score as the sole basis for hiring. Review candidates fairly and avoid using protected personal characteristics.
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Upload Resumes</h2>
+      <br>
+
+      <label for="resumeFiles">Select Resume Text Files</label>
+      <input
+        type="file"
+        id="resumeFiles"
+        accept=".txt"
+        multiple
+      >
+
+      <div id="fileList" class="file-list">
+        No resume files selected.
+      </div>
+
+      <br>
+
+      <div class="grid">
+        <button class="green" onclick="screenResumes()">
+          Screen Resumes
+        </button>
+
+        <button class="gray" onclick="downloadCSV()">
+          Download CSV Report
+        </button>
+
+        <button class="red" onclick="clearResults()">
+          Clear Results
+        </button>
+      </div>
+
+      <div id="mainMessage" class="message"></div>
+    </section>
+
+    <section class="card">
+      <h2>Screening Results</h2>
+
+      <br>
+
+      <div class="grid">
+        <div>
+          <label for="resultFilter">Filter Results</label>
+          <select id="resultFilter" onchange="renderResults()">
+            <option value="all">All Candidates</option>
+            <option value="shortlisted">Shortlisted: 70% and above</option>
+            <option value="review">Needs Review: 40% to 69%</option>
+            <option value="low">Low Match: Below 40%</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="sortResults">Sort Results</label>
+          <select id="sortResults" onchange="renderResults()">
+            <option value="score-desc">Highest Score First</option>
+            <option value="score-asc">Lowest Score First</option>
+            <option value="name">Candidate Name</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="results" class="candidate-list">
+        <div class="empty">
+          Enter a job description and upload resumes to begin.
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Screening History</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Candidate</th>
+            <th>Job Role</th>
+            <th>Score</th>
+            <th>Matched Skills</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+
+        <tbody id="historyBody"></tbody>
+      </table>
+    </section>
+
+  </main>
+
+  <script>
+    let screeningResults = JSON.parse(
+      localStorage.getItem("resumeScreeningResults") || "[]"
+    );
+
+    let screeningHistory = JSON.parse(
+      localStorage.getItem("resumeScreeningHistory") || "[]"
+    );
+
+    const skillDictionary = [
+      "html",
+      "css",
+      "javascript",
+      "typescript",
+      "react",
+      "angular",
+      "vue",
+      "node.js",
+      "nodejs",
+      "express",
+      "python",
+      "java",
+      "c++",
+      "c#",
+      "php",
+      "sql",
+      "mysql",
+      "mongodb",
+      "firebase",
+      "aws",
+      "azure",
+      "google cloud",
+      "docker",
+      "kubernetes",
+      "git",
+      "github",
+      "rest api",
+      "graphql",
+      "machine learning",
+      "deep learning",
+      "artificial intelligence",
+      "natural language processing",
+      "nlp",
+      "data analysis",
+      "pandas",
+      "numpy",
+      "tensorflow",
+      "pytorch",
+      "scikit-learn",
+      "cybersecurity",
+      "network security",
+      "communication",
+      "leadership",
+      "problem solving",
+      "teamwork",
+      "agile",
+      "scrum",
+      "linux"
+    ];
+
+    const resumeFiles = document.getElementById("resumeFiles");
+
+    resumeFiles.addEventListener("change", function () {
+      const files = Array.from(resumeFiles.files);
+
+      if (files.length === 0) {
+        document.getElementById("fileList").textContent =
+          "No resume files selected.";
+        return;
+      }
+
+      document.getElementById("fileList").innerHTML =
+        files.map(file => `
+          <div>
+            📄 ${escapeHTML(file.name)}
+            - ${formatBytes(file.size)}
+          </div>
+        `).join("");
+    });
+
+    function escapeHTML(value) {
+      return value
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function formatBytes(bytes) {
+      if (bytes === 0) return "0 Bytes";
+
+      const units = ["Bytes", "KB", "MB", "GB"];
+      const index = Math.floor(Math.log(bytes) / Math.log(1024));
+
+      return (
+        (bytes / Math.pow(1024, index)).toFixed(2) +
+        " " +
+        units[index]
+      );
+    }
+
+    function cleanText(text) {
+      return text
+        .toLowerCase()
+        .replace(/[^\w\s+#.-]/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+
+    function extractSkills(text) {
+      const cleanedText = cleanText(text);
+
+      return skillDictionary.filter(skill => {
+        const pattern = new RegExp(
+          "(^|\\s)" +
+          skill.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") +
+          "(\\s|$)",
+          "i"
+        );
+
+        return pattern.test(cleanedText);
+      });
+    }
+
+    function extractCandidateName(fileName, text) {
+      const firstLine = text
+        .split("\n")
+        .map(line => line.trim())
+        .find(line => line.length > 0);
+
+      if (firstLine && firstLine.length < 60) {
+        return firstLine;
+      }
+
+      return fileName.replace(/\.[^/.]+$/, "");
+    }
+
+    function calculateScore(resumeText, jobText) {
+      const jobSkills = extractSkills(jobText);
+      const resumeSkills = extractSkills(resumeText);
+
+      const matchedSkills = jobSkills.filter(skill =>
+        resumeSkills.includes(skill)
+      );
+
+      const missingSkills = jobSkills.filter(skill =>
+        !resumeSkills.includes(skill)
+      );
+
+      const skillScore = jobSkills.length === 0
+        ? 0
+        : (matchedSkills.length / jobSkills.length) * 70;
+
+      const cleanedResume = cleanText(resumeText);
+      const cleanedJob = cleanText(jobText);
+
+      const jobWords = [
+        ...new Set(
+          cleanedJob
+            .split(" ")
+            .filter(word => word.length > 3)
+        )
+      ];
+
+      const matchedWords = jobWords.filter(word =>
+        cleanedResume.includes(word)
+      );
+
+      const keywordScore = jobWords.length === 0
+        ? 0
+        : (matchedWords.length / jobWords.length) * 30;
+
+      const finalScore = Math.min(
+        100,
+        Math.round(skillScore + keywordScore)
+      );
+
+      return {
+        score: finalScore,
+        jobSkills,
+        resumeSkills,
+        matchedSkills,
+        missingSkills,
+        matchedWords: matchedWords.length
+      };
+    }
+
+    function screenResumes() {
+      const jobTitle =
+        document.getElementById("jobTitle").value.trim();
+
+      const jobDescription =
+        document.getElementById("jobDescription").value.trim();
+
+      const files = Array.from(resumeFiles.files);
+
+      if (!jobTitle || !jobDescription) {
+        showMessage(
+          "Enter a job title and job description first.",
+          "error-message"
+        );
+        return;
+      }
+
+      if (files.length === 0) {
+        showMessage(
+          "Upload at least one .txt resume file.",
+          "error-message"
+        );
+        return;
+      }
+
+      screeningResults = [];
+      let completed = 0;
+
+      files.forEach(file => {
+        const reader = new FileReader();
+
+        reader.onload = function (event) {
+          const resumeText = event.target.result;
+          const analysis = calculateScore(
+            resumeText,
+            jobDescription
+          );
+
+          const candidate = {
+            id: "CAN-" + Date.now() + "-" + completed,
+            fileName: file.name,
+            candidateName: extractCandidateName(
+              file.name,
+              resumeText
+            ),
+            jobTitle,
+            resumeText,
+            score: analysis.score,
+            jobSkills: analysis.jobSkills,
+            resumeSkills: analysis.resumeSkills,
+            matchedSkills: analysis.matchedSkills,
+            missingSkills: analysis.missingSkills,
+            matchedWords: analysis.matchedWords,
+            date: new Date().toLocaleString()
+          };
+
+          screeningResults.push(candidate);
+          completed++;
+
+          if (completed === files.length) {
+            screeningResults.sort((a, b) => b.score - a.score);
+
+            screeningHistory = [
+              ...screeningResults,
+              ...screeningHistory
+            ].slice(0, 100);
+
+            saveData();
+            renderResults();
+            renderHistory();
+            updateStats();
+
+            showMessage(
+              files.length +
+              " resume(s) screened successfully.",
+              "success-message"
+            );
+          }
+        };
+
+        reader.readAsText(file);
+      });
+    }
+
+    function getScoreClass(score) {
+      if (score >= 70) return "high-score";
+      if (score >= 40) return "medium-score";
+      return "low-score";
+    }
+
+    function getRecommendation(score) {
+      if (score >= 70) return "Shortlist for interview";
+      if (score >= 40) return "Review manually";
+      return "Low match";
+    }
+
+    function renderResults() {
+      const container = document.getElementById("results");
+      const filter = document.getElementById("resultFilter").value;
+      const sort = document.getElementById("sortResults").value;
+
+      let results = [...screeningResults];
+
+      if (filter === "shortlisted") {
+        results = results.filter(candidate => candidate.score >= 70);
+      } else if (filter === "review") {
+        results = results.filter(
+          candidate => candidate.score >= 40 &&
+                       candidate.score < 70
+        );
+      } else if (filter === "low") {
+        results = results.filter(candidate => candidate.score < 40);
+      }
+
+      if (sort === "score-desc") {
+        results.sort((a, b) => b.score - a.score);
+      } else if (sort === "score-asc") {
+        results.sort((a, b) => a.score - b.score);
+      } else if (sort === "name") {
+        results.sort((a, b) =>
+          a.candidateName.localeCompare(b.candidateName)
+        );
+      }
+
+      if (results.length === 0) {
+        container.innerHTML = `
+          <div class="empty">
+            No candidates match the selected filter.
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = results.map(candidate => `
+        <article class="candidate-card">
+          <div class="candidate-header">
+            <div>
+              <h3>${escapeHTML(candidate.candidateName)}</h3>
+              <p>${escapeHTML(candidate.fileName)}</p>
+              <p>${escapeHTML(candidate.jobTitle)}</p>
+            </div>
+
+            <div class="score ${getScoreClass(candidate.score)}">
+              ${candidate.score}%
+            </div>
+          </div>
+
+          <div class="progress">
+            <div
+              class="progress-bar"
+              style="width: ${candidate.score}%">
+            </div>
+          </div>
+
+          <p>
+            <strong>Recommendation:</strong>
+            ${getRecommendation(candidate.score)}
+          </p>
+
+          <p>
+            <strong>Detected Resume Skills:</strong>
+            ${candidate.resumeSkills.length}
+          </p>
+
+          <div class="skill-section">
+            <div class="skill-box matched">
+              <strong>Matched Skills</strong>
+              <br>
+              ${
+                candidate.matchedSkills.length > 0
+                  ? candidate.matchedSkills.map(skill =>
+                      `<span class="tag">${skill}</span>`
+                    ).join("")
+                  : "No matched skills detected."
+              }
+            </div>
+
+            <div class="skill-box missing">
+              <strong>Missing Skills</strong>
+              <br>
+              ${
+                candidate.missingSkills.length > 0
+                  ? candidate.missingSkills.map(skill =>
+                      `<span class="tag">${skill}</span>`
+                    ).join("")
+                  : "No missing skills detected."
+              }
+            </div>
+          </div>
+        </article>
+      `).join("");
+    }
+
+    function renderHistory() {
+      const body = document.getElementById("historyBody");
+
+      if (screeningHistory.length === 0) {
+        body.innerHTML = `
+          <tr>
+            <td colspan="5" class="empty">
+              No screening history available.
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      body.innerHTML = screeningHistory.map(candidate => `
+        <tr>
+          <td>${escapeHTML(candidate.candidateName)}</td>
+          <td>${escapeHTML(candidate.jobTitle)}</td>
+          <td>${candidate.score}%</td>
+          <td>${candidate.matchedSkills.length}</td>
+          <td>${candidate.date}</td>
+        </tr>
+      `).join("");
+    }
+
+    function updateStats() {
+      const count = screeningResults.length;
+
+      const average = count === 0
+        ? 0
+        : Math.round(
+            screeningResults.reduce(
+              (total, candidate) => total + candidate.score,
+              0
+            ) / count
+          );
+
+      const shortlisted = screeningResults.filter(
+        candidate => candidate.score >= 70
+      ).length;
+
+      const skills = new Set(
+        screeningResults.flatMap(
+          candidate => candidate.resumeSkills
+        )
+      );
+
+      document.getElementById("candidateCount").textContent =
+        count;
+
+      document.getElementById("averageScore").textContent =
+        average + "%";
+
+      document.getElementById("shortlistedCount").textContent =
+        shortlisted;
+
+      document.getElementById("skillCount").textContent =
+        skills.size;
+    }
+
+    function downloadCSV() {
+      if (screeningResults.length === 0) {
+        showMessage(
+          "Screen at least one resume before downloading.",
+          "error-message"
+        );
+        return;
+      }
+
+      const rows = [
+        [
+          "Candidate",
+          "File",
+          "Job Title",
+          "Score",
+          "Matched Skills",
+          "Missing Skills",
+          "Recommendation",
+          "Date"
+        ]
+      ];
+
+      screeningResults.forEach(candidate => {
+        rows.push([
+          candidate.candidateName,
+          candidate.fileName,
+          candidate.jobTitle,
+          candidate.score + "%",
+          candidate.matchedSkills.join("; "),
+          candidate.missingSkills.join("; "),
+          getRecommendation(candidate.score),
+          candidate.date
+        ]);
+      });
+
+      const csv = rows.map(row =>
+        row.map(value =>
+          '"' + String(value).replaceAll('"', '""') + '"'
+        ).join(",")
+      ).join("\n");
+
+      const blob = new Blob([csv], {
+        type: "text/csv"
+      });
+
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "resume-screening-results.csv";
+      link.click();
+
+      setTimeout(() => {
+        URL.revokeObjectURL(link.href);
+      }, 1000);
+    }
+
+    function clearResults() {
+      const confirmation = confirm(
+        "Clear current screening results?"
+      );
+
+      if (!confirmation) return;
+
+      screeningResults = [];
+      saveData();
+      renderResults();
+      updateStats();
+
+      showMessage(
+        "Current screening results cleared.",
+        "success-message"
+      );
+    }
+
+    function showMessage(text, type) {
+      const message = document.getElementById("mainMessage");
+
+      message.textContent = text;
+      message.className = "message " + type;
+      message.style.display = "block";
+
+      setTimeout(() => {
+        message.style.display = "none";
+      }, 5000);
+    }
+
+    function saveData() {
+      localStorage.setItem(
+        "resumeScreeningResults",
+        JSON.stringify(screeningResults)
+      );
+
+      localStorage.setItem(
+        "resumeScreeningHistory",
+        JSON.stringify(screeningHistory)
+      );
+    }
+
+    renderResults();
+    renderHistory();
+    updateStats();
+  </script>
+</body>
+</html>
